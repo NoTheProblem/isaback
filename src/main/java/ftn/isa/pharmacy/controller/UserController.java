@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.controller;
 
-import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.UserDTO;
 import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.model.User;
@@ -15,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "users")

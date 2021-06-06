@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.dto;
 
-import ftn.isa.pharmacy.model.Medicine;
 
 public class MedicineRegisterDto {
 

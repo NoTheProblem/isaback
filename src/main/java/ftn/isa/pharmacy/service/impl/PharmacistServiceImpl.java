@@ -20,7 +20,6 @@ import java.util.*;
 public class PharmacistServiceImpl implements PharmacistService {
 
     private final PharmacistRepository pharmacistRepository;
-    private final DermatologistRepository dermatologistRepository;
     private final PharmacistMapperImpl pharmacistMapper;
     private final PharmacyMapperImpl pharmacyMapper;
     private final PharmacyAdminRepository pharmacyAdminRepository;
@@ -30,9 +29,8 @@ public class PharmacistServiceImpl implements PharmacistService {
     private final AuthorityService authorityService;
     private final PasswordEncoder passwordEncoder;
 
-    public PharmacistServiceImpl(PharmacistRepository pharmacistRepository, DermatologistRepository dermatologistRepository, PharmacistMapperImpl pharmacistMapper, PharmacyMapperImpl pharmacyMapper, PharmacyAdminRepository pharmacyAdminRepository, PharmacyRepository pharmacyRepository, WorkingHoursPharmacistMapperImpl workingHoursPharmacistMapper, WorkingHoursPharmacistRepository workingHoursPharmacistRepository, AuthorityService authorityService, PasswordEncoder passwordEncoder) {
+    public PharmacistServiceImpl(PharmacistRepository pharmacistRepository, PharmacistMapperImpl pharmacistMapper, PharmacyMapperImpl pharmacyMapper, PharmacyAdminRepository pharmacyAdminRepository, PharmacyRepository pharmacyRepository, WorkingHoursPharmacistMapperImpl workingHoursPharmacistMapper, WorkingHoursPharmacistRepository workingHoursPharmacistRepository, AuthorityService authorityService, PasswordEncoder passwordEncoder) {
         this.pharmacistRepository = pharmacistRepository;
-        this.dermatologistRepository = dermatologistRepository;
         this.pharmacistMapper = pharmacistMapper;
         this.pharmacyMapper = pharmacyMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
@@ -101,10 +99,9 @@ public class PharmacistServiceImpl implements PharmacistService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
-            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            return pharmacyAdmin;
+            return pharmacyAdminOptional.get();
         }
-        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
+        throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 
 }

@@ -22,15 +22,13 @@ public class PharmacyReportServiceImpl implements PharmacyReportService {
 
     private final PharmacyAdminRepository pharmacyAdminRepository;
     private final ExaminationRepository examinationRepository;
-    private final PriceMediceListRepository priceMediceListRepository;
     private final ReservationRepository reservationRepository;
     private final MedicineQuantityReservationRepository medicineQuantityReservationRepository;
     private final PersListRepository persListRepository;
 
-    public PharmacyReportServiceImpl(PharmacyAdminRepository pharmacyAdminRepository, ExaminationRepository examinationRepository, PriceMediceListRepository priceMediceListRepository, ReservationRepository reservationRepository, MedicineQuantityReservationRepository medicineQuantityReservationRepository, PersListRepository persListRepository) {
+    public PharmacyReportServiceImpl(PharmacyAdminRepository pharmacyAdminRepository, ExaminationRepository examinationRepository, ReservationRepository reservationRepository, MedicineQuantityReservationRepository medicineQuantityReservationRepository, PersListRepository persListRepository) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.examinationRepository = examinationRepository;
-        this.priceMediceListRepository = priceMediceListRepository;
         this.reservationRepository = reservationRepository;
         this.medicineQuantityReservationRepository = medicineQuantityReservationRepository;
         this.persListRepository = persListRepository;
@@ -260,7 +258,6 @@ public class PharmacyReportServiceImpl implements PharmacyReportService {
                     data.set(index,medQuanReportDTO);
                 }
                 else {
-                    int index = names.size();
                     names.add(medQuan.getMedicine().getName());
                     MedQuanReportDTO medQuanReportDTO = new MedQuanReportDTO();
                     medQuanReportDTO.setMedName(medQuan.getMedicine().getName());
@@ -281,7 +278,6 @@ public class PharmacyReportServiceImpl implements PharmacyReportService {
                 data.set(index,medQuanReportDTO);
             }
             else{
-                int index = names.size();
                 names.add(perscription.getMedicine().getName());
                 MedQuanReportDTO medQuanReportDTO = new MedQuanReportDTO();
                 medQuanReportDTO.setMedName(perscription.getMedicine().getName());
@@ -401,10 +397,9 @@ public class PharmacyReportServiceImpl implements PharmacyReportService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
-            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            return pharmacyAdmin;
+            return pharmacyAdminOptional.get();
         }
-        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
+        throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 
 

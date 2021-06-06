@@ -1,8 +1,11 @@
 package ftn.isa.pharmacy.service;
 
+import ftn.isa.pharmacy.mapper.impl.AbsenceMapperImpl;
 import ftn.isa.pharmacy.model.AbsenceRequest;
 import ftn.isa.pharmacy.repository.AbsenceRequestRepository;
+import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.service.impl.AbsenceServiceImpl;
+import ftn.isa.pharmacy.service.impl.MailServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,20 +31,14 @@ public class AbsenceServiceTest {
     @Mock
     private AbsenceRequestRepository absenceRequestRepositoryMock;
 
-    @Mock
-    private AbsenceRequest absence;
-
     @InjectMocks
     private AbsenceServiceImpl absenceService;
 
-
     @Test
     public void getByEmployeeId() {
-        //4
-        Date date = new Date();
         when(absenceRequestRepositoryMock.
                 findAllByEmployeeIdAndStatusIsLikeAndStartDateAfterOrEmployeeIdAndStatusIsLikeAndEndDateAfter
-                        (DB_id,DB_status,date,DB_id,DB_status, date)).thenReturn(Arrays.asList(new AbsenceRequest()));
+                        (DB_id,DB_status,null,DB_id,DB_status,null)).thenReturn(Arrays.asList(new AbsenceRequest()));
 
         Collection<AbsenceRequest> absenceRequests = absenceService.getByEmployeeId(DB_id);
         assertThat(absenceRequests).hasSize(1);

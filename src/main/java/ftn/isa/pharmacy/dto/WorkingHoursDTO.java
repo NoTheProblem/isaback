@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.dto;
 
-import java.sql.Time;
 import java.util.Date;
 
 public class WorkingHoursDTO {

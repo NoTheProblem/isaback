@@ -1,12 +1,9 @@
 package ftn.isa.pharmacy.mapper.impl;
 
 import ftn.isa.pharmacy.dto.PatientDTO;
-
 import ftn.isa.pharmacy.mapper.AbstractMapper;
 import ftn.isa.pharmacy.mapper.PatientMapper;
-
 import ftn.isa.pharmacy.model.Patient;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

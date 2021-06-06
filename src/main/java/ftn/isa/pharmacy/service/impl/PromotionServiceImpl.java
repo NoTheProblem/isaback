@@ -47,9 +47,8 @@ public class PromotionServiceImpl implements PromotionService {
         Date date = new Date();
         List<Promotion> promotions = promotionRepository.findAllByEndDateAfter(date);
         if(promotions.isEmpty()){
-            throw new ResourceConflictException(1l,"Ne postoje promocije/akcije");
+            throw new ResourceConflictException(1L,"Ne postoje promocije/akcije");
         }
-
         return  promotions;
      }
 
@@ -57,7 +56,7 @@ public class PromotionServiceImpl implements PromotionService {
     public void addPromotion(PromotionDTO promotionDTO) {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         if(promotionDTO.getEndDate().before(promotionDTO.getStartDate())){
-            throw new ResourceConflictException(1l,"Greska u datumima");
+            throw new ResourceConflictException(1L,"Greska u datumima");
         }
         Promotion promotion = promotionMapper.bean2Entity(promotionDTO);
         promotion.setPharmacy(pharmacyAdmin.getPharmacy());
@@ -95,7 +94,6 @@ public class PromotionServiceImpl implements PromotionService {
     public Collection<Promotion> getAllForPharmacyAdmin() {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
-        Date date = new Date();
         return  promotionRepository.findAllByPharmacy(pharmacy);
     }
 
@@ -104,10 +102,9 @@ public class PromotionServiceImpl implements PromotionService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
-            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            return pharmacyAdmin;
+            return pharmacyAdminOptional.get();
         }
-        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
+        throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 
 }

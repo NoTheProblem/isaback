@@ -21,14 +21,12 @@ import java.util.Optional;
 public class MailServiceImpl implements MailService {
 
     final private MailConfig mailConfig;
-    private final PatientRepository patientRepository;
     private final PharmacistRepository pharmacistRepository;
     private final DermatologistRepository dermatologistRepository;
     
     @Autowired
-    public MailServiceImpl(MailConfig mailConfig, PatientRepository patientRepository, PharmacistRepository pharmacistRepository, DermatologistRepository dermatologistRepository) {
+    public MailServiceImpl(MailConfig mailConfig, PharmacistRepository pharmacistRepository, DermatologistRepository dermatologistRepository) {
         this.mailConfig = mailConfig;
-        this.patientRepository = patientRepository;
         this.pharmacistRepository = pharmacistRepository;
         this.dermatologistRepository = dermatologistRepository;
     }

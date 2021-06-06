@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
     private final MedicineRepository medicineRepository;
 
-    public OrderServiceImpl(PurchaseOrderRepository purchaseOrderRepository, PurchaseOrderMapperImpl purchaseOrderMapper, PharmacyAdminRepository pharmacyAdminRepository, MedicineMapperImpl medicineMapper, QuantityMapperImpl quantityMapper, BidRepository bidRepository, BidMapperImpl bidMapper, SupplierMapperImpl supplierMapper, MailServiceImpl mailService, SupplierRepository supplierRepository, MedicineQuantityOrderRepository medicineQuantityOrderRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository) {
+    public OrderServiceImpl(PurchaseOrderRepository purchaseOrderRepository, PurchaseOrderMapperImpl purchaseOrderMapper, PharmacyAdminRepository pharmacyAdminRepository,  QuantityMapperImpl quantityMapper, BidRepository bidRepository, BidMapperImpl bidMapper, SupplierMapperImpl supplierMapper, MailServiceImpl mailService, SupplierRepository supplierRepository, MedicineQuantityOrderRepository medicineQuantityOrderRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository) {
         this.purchaseOrderRepository = purchaseOrderRepository;
         this.purchaseOrderMapper = purchaseOrderMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         Date today = new Date();
         if(purchaseOrderDTO.getEndDate().before(today)){
-            throw new ResourceConflictException(1l,"Greska!");
+            throw new ResourceConflictException(1L,"Greska!");
 
         }
         Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
@@ -80,9 +80,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Collection<PurchaseOrderDTO> getAllActive() {
         List<PurchaseOrder> purchaseOrders = purchaseOrderRepository.findAllByOrderByEndDateAsc();
-
-        Collection<PurchaseOrderDTO> purchaseOrderDTOS = purchaseOrderMapper.entity2Bean(purchaseOrders);
-        return purchaseOrderDTOS;
+        return purchaseOrderMapper.entity2Bean(purchaseOrders);
         }
 
     @Override
@@ -109,16 +107,16 @@ public class OrderServiceImpl implements OrderService {
     public void confirmBid(BidDTO bidDTO, Long id) {
         PurchaseOrder purchaseOrder = purchaseOrderRepository.getOne(id);
         if(purchaseOrder.getStatus().equals("obradjen")){
-            throw new ResourceConflictException(1l,"Vec obradjena porudzbenica");
+            throw new ResourceConflictException(1L,"Vec obradjena porudzbenica");
 
         }
-        if(purchaseOrder.getPharmacyAdmin().getId()!= getPharmacyAdmin().getId()){
-            throw new ResourceConflictException(1l,"Niste vi napravili porudzbenicu");
+        if(purchaseOrder.getPharmacyAdmin().getId() != getPharmacyAdmin().getId()){
+            throw new ResourceConflictException(1L,"Niste vi napravili porudzbenicu");
 
         }
         Date today = new Date();
         if(purchaseOrder.getEndDate().before(today)){
-            throw new ResourceConflictException(1l,"Greska!");
+            throw new ResourceConflictException(1L,"Greska!");
         }
         Bid bid = bidMapper.bean2Entity(bidDTO);
         Long suppID = bidDTO.getSupplier().getId();
@@ -156,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
-            throw new ResourceConflictException(1l,"Postoje ponude!");
+            throw new ResourceConflictException(1L,"Postoje ponude!");
         }
         purchaseOrderRepository.deleteById(purchaseOrder.getId());
     }
@@ -166,7 +164,7 @@ public class OrderServiceImpl implements OrderService {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
-            throw new ResourceConflictException(1l,"Postoje ponude");
+            throw new ResourceConflictException(1L,"Postoje ponude");
         }
         purchaseOrderRepository.save(purchaseOrder);
 
@@ -179,6 +177,6 @@ public class OrderServiceImpl implements OrderService {
             PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
             return pharmacyAdmin;
         }
-        return null;
+        throw new ResourceConflictException(1L,"Ne postoji admin apotek");
     }
 }

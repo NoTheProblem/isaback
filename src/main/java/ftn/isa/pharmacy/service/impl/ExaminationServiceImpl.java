@@ -49,19 +49,19 @@ public class ExaminationServiceImpl implements ExaminationService {
         List<AbsenceRequest> absenceRequests = absenceRequestRepository.
                 findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsLike(examinationDto.getDermatologistId(),examinationDto.getDate(),examinationDto.getDate(), "Odobreno");
         if(absenceRequests.size()!=0){
-            throw new ResourceConflictException(1l,"Odsustvo!");
+            throw new ResourceConflictException(1L,"Odsustvo!");
         }
         Date today = new Date();
         if(examinationDto.getDate().before(today)){
-            throw new ResourceConflictException(1l,"Zakazivanje u proslost!");
+            throw new ResourceConflictException(1L,"Zakazivanje u proslost!");
         }
         String time = examinationDto.getTime();
         Dermatologist dermatologist = dermatologistRepository.getOne(examinationDto.getDermatologistId());
         Examination examination = examinationMapper.bean2Entity(examinationDto);
         Date date = examination.getDate();
-        int hours = Integer.valueOf(time.substring(0,2));
+        int hours = Integer.parseInt(time.substring(0,2));
         date.setHours(hours);
-        int minutes = Integer.valueOf(time.substring(3));
+        int minutes = Integer.parseInt(time.substring(3));
         date.setMinutes(minutes);
         examination.setDate(date);
         Date endDate = new Date();
@@ -80,7 +80,7 @@ public class ExaminationServiceImpl implements ExaminationService {
         dateEndShift.setMinutes(endShift.getMinutes());
         dateEndShift.setHours(endShift.getHours());
         if(date.after(dateEndShift) || endDate.before(dateStartShift) || endDate.after(dateEndShift)){
-            throw new ResourceConflictException(1l,"Nije u radnom vremenu!");
+            throw new ResourceConflictException(1L,"Nije u radnom vremenu!");
         }
         Date startDate = new Date();
         startDate.setTime(date.getTime());
@@ -97,10 +97,10 @@ public class ExaminationServiceImpl implements ExaminationService {
             exaEnd.setTime(exaDate.getTime());
             exaEnd.setMinutes(exa.getDate().getHours()+ exa.getDurationMinutes());
             if (date.after(exaStart) && date.before(exaEnd)){
-                throw new ResourceConflictException(1l,"Preklapa se sa terminom!");
+                throw new ResourceConflictException(1L,"Preklapa se sa terminom!");
             }
             if(endDate.after(exaStart) && endDate.before(exaEnd)){
-                throw new ResourceConflictException(1l,"Preklapa se sa terminom!");
+                throw new ResourceConflictException(1L,"Preklapa se sa terminom!");
             }
         }
         examination.setPharmacy(pharmacy);
@@ -124,6 +124,6 @@ public class ExaminationServiceImpl implements ExaminationService {
         if(pharmacyAdminOptional.isPresent()) {
             return pharmacyAdminOptional.get();
         }
-        return null;
+        throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 }

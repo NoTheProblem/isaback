@@ -25,7 +25,6 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final PharmacyRepository pharmacyRepository;
     private final PharmacyAdminRepository pharmacyAdminRepository;
     private final PatientRepository patientRepository;
-    private final PromotionRepository promotionRepository;
     private final MailServiceImpl mailService;
     private final DermatologistMapperImpl dermatologistMapper;
     private final WorkingHoursMapperImpl workingHoursMapper;
@@ -41,11 +40,10 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
-        this.promotionRepository = promotionRepository;
         this.mailService = mailService;
         this.dermatologistMapper = dermatologistMapper;
         this.workingHoursMapper = workingHoursMapper;
@@ -67,10 +65,9 @@ public class PharmacyServiceImpl implements PharmacyService {
     public Pharmacy getById(Long id) {
         Optional<Pharmacy> pharmacyOptional =  pharmacyRepository.findById(id);
         if(pharmacyOptional.isPresent()){
-            Pharmacy pharmacy = pharmacyOptional.get();
-            return pharmacy;
+            return pharmacyOptional.get();
         }
-        throw new ResourceConflictException(1l,"Ne postoji apoteka");
+        throw new ResourceConflictException(1L,"Ne postoji apoteka");
 
     }
 
@@ -80,10 +77,9 @@ public class PharmacyServiceImpl implements PharmacyService {
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
             PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
-            return pharmacy;
+            return pharmacyAdmin.getPharmacy();
         }
-        throw new ResourceConflictException(1l,"Ne postoje promocije/akcije");
+        throw new ResourceConflictException(1L,"Ne postoje promocije/akcije");
 
     }
 
@@ -101,22 +97,20 @@ public class PharmacyServiceImpl implements PharmacyService {
             mailService.newSubscriptionForPromotion(pharmacy,patient);
             return true;
         }
-        throw new ResourceConflictException(1l,"Ne postoji pacijent");
+        throw new ResourceConflictException(1L,"Ne postoji pacijent");
 
     }
 
     @Override
     public Set<Dermatologist> getDermaByPhaID(Long id) {
         Pharmacy pharmacy = pharmacyRepository.getOne(id);
-        Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
-        return dermatologists;
+        return pharmacy.getDermatologists();
     }
 
     @Override
     public Set<Pharmacist> getPharmaByPhaID(Long id) {
         Pharmacy pharmacy = pharmacyRepository.getOne(id);
-        Set<Pharmacist> pharmacists =  pharmacy.getPharmacists();
-        return  pharmacists;
+        return pharmacy.getPharmacists();
     }
 
     @Override
@@ -144,10 +138,9 @@ public class PharmacyServiceImpl implements PharmacyService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
-            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            return pharmacyAdmin;
+            return pharmacyAdminOptional.get();
         }
-        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
+        throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 
     @Override
@@ -194,26 +187,25 @@ public class PharmacyServiceImpl implements PharmacyService {
             Set<Examination> examinations = dermatologist.getExaminations();
             for (Examination examination:examinations) {
                 if(examination.getDate().after(today)){
-                    throw new ResourceConflictException(1l,"Greska!");
+                    throw new ResourceConflictException(1L,"Greska!");
                 }
             }
             Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
             dermatologists.remove(dermatologist);
             pharmacy.setDermatologists(dermatologists);
-            pharmacyRepository.save(pharmacy);
         }else {
             Pharmacist pharmacist = pharmacistRepository.getOne(id);
             Set<Counseling> counselings = pharmacist.getCounselings();
             for (Counseling counseling: counselings){
                 if(counseling.getDate().after(today)){
-                    throw new ResourceConflictException(1l,"Greska!");
+                    throw new ResourceConflictException(1L,"Greska!");
                 }
             }
             Set<Pharmacist> pharmacists = pharmacy.getPharmacists();
             pharmacists.remove(pharmacist);
             pharmacy.setPharmacists(pharmacists);
-            pharmacyRepository.save(pharmacy);
 
         }
+        pharmacyRepository.save(pharmacy);
     }
 }

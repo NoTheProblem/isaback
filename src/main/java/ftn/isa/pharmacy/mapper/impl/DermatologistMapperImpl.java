@@ -1,13 +1,9 @@
 package ftn.isa.pharmacy.mapper.impl;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
-import ftn.isa.pharmacy.dto.ExaminationDto;
-import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.mapper.AbstractMapper;
 import ftn.isa.pharmacy.mapper.DermatologistMapper;
 import ftn.isa.pharmacy.model.Dermatologist;
-import ftn.isa.pharmacy.model.Examination;
-import ftn.isa.pharmacy.mapper.ExaminationMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

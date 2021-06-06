@@ -1,8 +1,6 @@
 package ftn.isa.pharmacy.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 public class WorkingHoursPharmacist {

@@ -2,7 +2,6 @@ package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.PromotionDTO;
 import ftn.isa.pharmacy.mapper.impl.PromotionMapperImpl;
-import ftn.isa.pharmacy.repository.WorkingHoursRepository;
 import ftn.isa.pharmacy.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public class PromotionController {
     private final PromotionMapperImpl promotionMapper;
 
     @Autowired
-    public PromotionController(PromotionService promotionService, PromotionMapperImpl promotionMapper, WorkingHoursRepository workingHoursRepository) {
+    public PromotionController(PromotionService promotionService, PromotionMapperImpl promotionMapper) {
         this.promotionService = promotionService;
         this.promotionMapper = promotionMapper;
     }

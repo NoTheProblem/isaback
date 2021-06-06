@@ -32,19 +32,16 @@ public class MedicineServiceImpl implements MedicineService {
     private final PriceMediceListRepository priceMediceListRepository;
     private final MedicineMapperImpl medicineMapper;
     private final PriceMediceMapper priceMediceMapper;
-  
-    private final SysAdminRepository sysAdminRepository;
     private final MedicineRegisterMapper medicineRegisterMapper;
 
     @Autowired
-    public MedicineServiceImpl(MedicineRepository medicineRepository, PharmacyAdminRepository pharmacyAdminRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, PriceMediceListRepository priceMediceListRepository, MedicineMapperImpl medicineMapper, PriceMediceMapper priceMediceMapper, SysAdminRepository sysAdminRepository, MedicineRegisterMapper medicineRegisterMapper) {
+    public MedicineServiceImpl(MedicineRepository medicineRepository, PharmacyAdminRepository pharmacyAdminRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, PriceMediceListRepository priceMediceListRepository, MedicineMapperImpl medicineMapper, PriceMediceMapper priceMediceMapper,MedicineRegisterMapper medicineRegisterMapper) {
         this.medicineRepository = medicineRepository;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
         this.priceMediceListRepository = priceMediceListRepository;
         this.medicineMapper = medicineMapper;
         this.priceMediceMapper = priceMediceMapper;
-        this.sysAdminRepository = sysAdminRepository;
         this.medicineRegisterMapper = medicineRegisterMapper;
     }
 
@@ -70,10 +67,9 @@ public class MedicineServiceImpl implements MedicineService {
     public PriceMediceDTO getMedPriceForPhaAdmin(Long medID) {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
-        List<PriceMediceList> priceMediceLists = new Stack<>();
         Medicine medicine = medicineRepository.getOne(medID);
         MedicineDto medicineDto = medicineMapper.entity2Bean(medicine);
-        priceMediceLists = priceMediceListRepository.findAllByPharmacyAndMedicineOrderByEndDateDesc(pharmacy,medicine);
+        List<PriceMediceList> priceMediceLists = priceMediceListRepository.findAllByPharmacyAndMedicineOrderByEndDateDesc(pharmacy,medicine);
         if(priceMediceLists.isEmpty()){
             PriceMediceList priceMediceList = new PriceMediceList();
             PriceMediceDTO priceMediceDTO = priceMediceMapper.entity2Bean(priceMediceList);
@@ -93,7 +89,7 @@ public class MedicineServiceImpl implements MedicineService {
         PriceMediceList priceMediceList = priceMediceMapper.bean2Entity(priceMediceDTO);
         Date date = new Date();
         if(priceMediceList.getStartDate().before(date)){
-            throw new ResourceConflictException(1l,"Ne moze se unazad stavljati vreme");
+            throw new ResourceConflictException(1L,"Ne moze se unazad stavljati vreme");
         }
         priceMediceList.setMedicine(medicine);
         date.setTime(priceMediceList.getStartDate().getTime());
@@ -103,7 +99,7 @@ public class MedicineServiceImpl implements MedicineService {
         int i = 0;
         for (PriceMediceList priceMed: priceMediceLists) {
             if (date.before(priceMed.getStartDate())){
-                throw new ResourceConflictException(1l,"Postoji vec cena za taj period");
+                throw new ResourceConflictException(1L,"Postoji vec cena za taj period");
             }
             if(i==0){
                 priceMed.setEndDate(date);
@@ -121,7 +117,7 @@ public class MedicineServiceImpl implements MedicineService {
         if(pharmacyAdminOptional.isPresent()) {
             return pharmacyAdminOptional.get();
         }
-        throw new ResourceConflictException(1l,"Greska!");
+        throw new ResourceConflictException(1L,"Greska!");
     }
     public List<Medicine> getAllReg() {
         return medicineRepository.findAll();
@@ -148,20 +144,12 @@ public class MedicineServiceImpl implements MedicineService {
         Set<PersList>  medicinePersLists =medicine.getPersLists();
         for(PersList perscription: medicinePersLists){
             if(perscription.getePrescription().getStatus().equals("NotTaken")){
-                throw new ResourceConflictException(1l,"Greska!");
+                throw new ResourceConflictException(1L,"Greska!");
             }
         }
         medicineQuantityPharmacyRepository.deleteByPharmacyAndMedicine(pharmacy,medicine);
     }
 
-    private SysAdmin getSysAdmin(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<SysAdmin> sysAdminOptional = sysAdminRepository.findById(((User) authentication.getPrincipal()).getId());
-        if(sysAdminOptional.isPresent()) {
-            SysAdmin sysAdmin = sysAdminOptional.get();
-            return sysAdmin;
-        }
-        return null;
-    }
+
 
 }

@@ -24,7 +24,7 @@ public interface AbsenceRequestRepository extends JpaRepository<AbsenceRequest, 
     List<AbsenceRequest> getAllByPharmacyAndTypeOfEmployeeAndStatus(Pharmacy pharmacy, String type, String status);
     //List<AbsenceRequest> findAllByEmployeeIdAndStartDateAfterAndEndDateBeforeAndStatusIsLike(Long id, Date startDate, Date endDate, String status);
     List<AbsenceRequest> findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsLike(Long id, Date start, Date end, String status);
-    List<AbsenceRequest> findAllByEmployeeIdAndStartDateAfterAndStatusIsNotLike(Long id, Date date, String status);
+    // List<AbsenceRequest> findAllByEmployeeIdAndStartDateAfterAndStatusIsNotLike(Long id, Date date, String status);
 
     List<AbsenceRequest> findAllByEmployeeIdAndStatusIsLikeAndStartDateAfterOrEmployeeIdAndStatusIsLikeAndEndDateAfter(Long id, String status, Date date,Long id2, String status2, Date datee);
 

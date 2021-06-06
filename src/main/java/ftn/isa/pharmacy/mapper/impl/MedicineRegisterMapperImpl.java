@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.mapper.impl;
 
-import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.MedicineRegisterDto;
 import ftn.isa.pharmacy.mapper.AbstractMapper;
 import ftn.isa.pharmacy.mapper.MedicineRegisterMapper;

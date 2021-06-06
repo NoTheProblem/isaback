@@ -1,12 +1,8 @@
 package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.PharmacistDTO;
-import ftn.isa.pharmacy.dto.PharmacyDto;
-import ftn.isa.pharmacy.mapper.impl.PharmacistMapperImpl;
 import ftn.isa.pharmacy.service.PharmacistService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -15,11 +11,9 @@ import java.util.Collection;
 @RequestMapping("/pharmacist")
 public class PharmacistController {
 
-    private final PharmacistMapperImpl pharmacistMapper;
     private final PharmacistService pharmacistService;
 
-    public PharmacistController(PharmacistMapperImpl pharmacistMapper, PharmacistService pharmacistService) {
-        this.pharmacistMapper = pharmacistMapper;
+    public PharmacistController(PharmacistService pharmacistService) {
         this.pharmacistService = pharmacistService;
     }
 

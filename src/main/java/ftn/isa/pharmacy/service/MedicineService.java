@@ -3,10 +3,7 @@ package ftn.isa.pharmacy.service;
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
 import ftn.isa.pharmacy.model.Medicine;
-import ftn.isa.pharmacy.model.PriceMediceList;
 import ftn.isa.pharmacy.dto.MedicineRegisterDto;
-import ftn.isa.pharmacy.model.Medicine;
-import ftn.isa.pharmacy.model.Promotion;
 
 
 import java.util.Collection;

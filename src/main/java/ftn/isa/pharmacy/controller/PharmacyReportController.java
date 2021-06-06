@@ -5,8 +5,6 @@ import ftn.isa.pharmacy.service.PharmacyReportService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @RestController
 @RequestMapping("/pharmacyReport")
 public class PharmacyReportController {

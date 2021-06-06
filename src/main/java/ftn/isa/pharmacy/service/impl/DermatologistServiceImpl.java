@@ -133,10 +133,10 @@ public class DermatologistServiceImpl implements DermatologistService  {
         Date end = new Date();
         end.setTime(wk.getEndTime().getTime());
         if (startTime.after(start) && startTime.before(end)) {
-            throw new ResourceConflictException(1l,"Preklapa se termin!");
+            throw new ResourceConflictException(1L,"Preklapa se termin!");
         }
         if (endTime.after(start) && endTime.before(end)) {
-            throw new ResourceConflictException(1l,"Preklapa se termin!");
+            throw new ResourceConflictException(1L,"Preklapa se termin!");
         }
     }
 
@@ -145,10 +145,9 @@ public class DermatologistServiceImpl implements DermatologistService  {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
-            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            return pharmacyAdmin;
+            return pharmacyAdminOptional.get();
         }
-        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
+        throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 
 

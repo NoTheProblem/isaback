@@ -1,9 +1,5 @@
 package ftn.isa.pharmacy.dto;
 
-import ftn.isa.pharmacy.model.Examination;
-
-import javax.persistence.Column;
-import java.sql.Time;
 import java.util.Date;
 
 public class ExaminationDto {

@@ -5,11 +5,7 @@ import ftn.isa.pharmacy.mapper.MedicineMapper;
 import ftn.isa.pharmacy.model.Medicine;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-
-import ftn.isa.pharmacy.dto.PharmacyDto;
 import ftn.isa.pharmacy.mapper.AbstractMapper;
-import ftn.isa.pharmacy.mapper.PharmacyMapper;
-import ftn.isa.pharmacy.model.Pharmacy;
 
 @Component
 public class MedicineMapperImpl extends AbstractMapper<Medicine, MedicineDto> implements MedicineMapper {

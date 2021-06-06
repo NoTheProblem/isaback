@@ -2,7 +2,6 @@ package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
-import ftn.isa.pharmacy.mapper.PriceMediceMapper;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
 import ftn.isa.pharmacy.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,12 @@ public class MedicineController {
 
     private final MedicineService medicineService;
     private final MedicineMapperImpl medicineMapper;
-    private final PriceMediceMapper priceMediceMapper;
-    private final MedicineRegisterMapperImpl medicineRegisterMapper;    
+    private final MedicineRegisterMapperImpl medicineRegisterMapper;
 
     @Autowired
-    public MedicineController(MedicineService medicineService, MedicineMapperImpl medicineMapper,PriceMediceMapper priceMediceMapper, MedicineRegisterMapperImpl medicineRegisterMapper) {
+    public MedicineController(MedicineService medicineService, MedicineMapperImpl medicineMapper,MedicineRegisterMapperImpl medicineRegisterMapper) {
         this.medicineService = medicineService;
         this.medicineMapper = medicineMapper;
-        this.priceMediceMapper = priceMediceMapper;
         this.medicineRegisterMapper = medicineRegisterMapper;
 
     }

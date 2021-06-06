@@ -3,9 +3,6 @@ package ftn.isa.pharmacy.dto;
 
 import ftn.isa.pharmacy.model.Medicine;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 public class MedicineDto {
 

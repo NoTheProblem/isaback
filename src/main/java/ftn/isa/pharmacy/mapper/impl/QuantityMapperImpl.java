@@ -5,7 +5,6 @@ import ftn.isa.pharmacy.mapper.QuantityMapper;
 import ftn.isa.pharmacy.model.MedicineQuantityOrder;
 import ftn.isa.pharmacy.model.PurchaseOrder;
 import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

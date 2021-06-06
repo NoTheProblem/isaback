@@ -1,10 +1,6 @@
 package ftn.isa.pharmacy.mapper;
 
-import ftn.isa.pharmacy.dto.PharmacyDto;
-import ftn.isa.pharmacy.model.Pharmacy;
-
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class AbstractMapper<TEntity, TBean> implements Mapper<TEntity, TBean> {

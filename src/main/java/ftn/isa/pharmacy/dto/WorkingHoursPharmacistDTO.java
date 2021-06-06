@@ -1,7 +1,5 @@
 package ftn.isa.pharmacy.dto;
 
-
-
 public class WorkingHoursPharmacistDTO {
     private Long id;
     private String startTime;

@@ -2,7 +2,6 @@ package ftn.isa.pharmacy.repository;
 
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.MedicineQuantityPharmacy;
-import ftn.isa.pharmacy.model.Pharmacist;
 import ftn.isa.pharmacy.model.Pharmacy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

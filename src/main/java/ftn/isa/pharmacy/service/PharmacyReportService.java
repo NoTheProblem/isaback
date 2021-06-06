@@ -3,8 +3,6 @@ package ftn.isa.pharmacy.service;
 import ftn.isa.pharmacy.dto.MedicineReportDTO;
 import ftn.isa.pharmacy.dto.PharmacyReportDTO;
 
-import java.util.Date;
-
 public interface PharmacyReportService {
 
     MedicineReportDTO yearlyMedicine(String year);
